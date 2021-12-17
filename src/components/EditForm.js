@@ -17,12 +17,8 @@ const EditForm = (props)=> {
 
     useEffect(() => {
         axiosWithAuth()
-            .get(`http://localhost:5000/api/articles/${editId}`)
-            .then(res => {
-                setArticle(res.data);
-            }).catch(error => {
-                console.error(error);
-            })
+          .get(`http://localhost:5000/api/articles/${editId}`)
+          .then( res => setArticle(res.data) )
     }, [])
 
     const handleChange = (e)=> {
@@ -36,7 +32,6 @@ const EditForm = (props)=> {
         e.preventDefault();
         handleEdit(article);
     }
-
 
     const handleCancel = (e) => {
         e.preventDefault();

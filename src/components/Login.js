@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
+
 const initialState = {
     username: '',
     password: ''
@@ -15,19 +16,19 @@ const Login = () => {
 
     const { push } = useHistory();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = e => {
         e.preventDefault();
         axios.post(`http://localhost:5000/api/login`, value)
             .then(res => {
-                localStorage.setItem('token', res.data.token)
-                push("/view");
+                localStorage.setItem('token', res.data.token);
+                push("/view")
             })
-            .catch(err => {
-            setError(err.res.data.error);
-        })
-    }
+            .catch(error => {
+                setError(error.res.data.error);
+            })
+        }
         
-    const handleChange = (e) => {
+    const handleChange = e => {
         setValues({
             ...value,
             [e.target.name]: e.target.value

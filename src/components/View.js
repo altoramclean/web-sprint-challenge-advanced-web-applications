@@ -13,7 +13,7 @@ const View = (props) => {
 
     useEffect(() => {
         axiosWithAuth()
-      .get(`http://localhost:5000/api/articles/`)
+      .get(`http://localhost:5000/api/articles`)
       .then((res) => {
         setArticles(res.data);
       })
