@@ -17,8 +17,13 @@ const testOne = {
     body: "test body"   
 };
 const testTwo = {
-    ...testOne,
-    author: ""
+    id: 1,
+    headline: "test article",
+    createdOn: "test createdOn",
+    author:"",
+    image: 134,
+    summary: "test summary",
+    body: "test body" 
 }
 
 
@@ -34,15 +39,21 @@ test('renders headline, author from the article when passed in through props', (
     const author = screen.getByText(/test author/i);
 
     expect(headline).toBeInTheDocument();
+    expect(headline).toBeTruthy()
+
     expect(author).toBeInTheDocument();
+    expect(author).toBeTruthy()
+
 });
 
 test('renders "Associated Press" when no author is given', ()=> {
-    render(<Article article = { testTwo }/>);
+    render(<Article article={testTwo}/>);
 
-    const assocPress = screen.getByText(/associated press/i);
+    const author = screen.queryByTestId(/author/i);
 
-    expect(assocPress).toBeInTheDocument();
+    expect(author).toBeInTheDocument();
+    expect(author).toHaveTextContent(/Associated Press/i)
+
 });
 
 
@@ -51,9 +62,11 @@ test('executes handleDelete when the delete button is pressed', ()=> {
     
     render(<Article article = { testOne } handleDelete = { handleDelete }/>);
 
-    const button = screen.getByTestId('deleteButton');
-    userEvent.click(button)
+    const button = screen.getByTestId(/deleteButton/i)
+    userEvent.click(button);
 
-    expect(handleDelete).toHaveBeenCalled();
+    expect(handleDelete).toBeCalledTimes(1);
+    expect(handleDelete).toBeCalled();
+
 });
 

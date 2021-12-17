@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import PrivateRoute from './PrivateRoute';
 import styled from 'styled-components';
 
@@ -16,10 +16,22 @@ const App = () => {
       <BloomHeader/>
       <Header/>
       <RouteContainer>
-    <Route exact path="/" component = { Login } />
-        <Route path = "/login" component = { Login } /> 
-        <PrivateRoute path = "/view" component = { View } />
-        <PrivateRoute path = "/logout" component = { Logout } />
+
+      <Route exact path = "/">
+          <Redirect to="/login"/>
+        </Route>
+        
+      <PrivateRoute exact path = "/logout">
+          <Logout/>
+        </PrivateRoute>
+
+        <PrivateRoute exact path = "/view">
+          <View/>
+        </PrivateRoute>
+
+        <Route exact path = "/login">
+          <Login/>
+        </Route>       
       </RouteContainer>
     </AppContainer>
   )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -20,10 +20,10 @@ const Login = () => {
         axios.post(`http://localhost:5000/api/login`, value)
             .then(res => {
                 localStorage.setItem('token', res.data.token)
-                push("/view")
+                push("/view");
             })
-            .catch(error => {
-            setError(error.res.data.error);
+            .catch(err => {
+            setError(err.res.data.error);
         })
     }
         
@@ -39,7 +39,7 @@ return(<ComponentContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
             <div> 
-            <form onSubmit={handleSubmit}>
+            <FormGroup>
             <label>Username
                 <input 
                     id="username" 
@@ -58,8 +58,8 @@ return(<ComponentContainer>
                     onChange={handleChange} />
                     </label>
                 
-                    <button id="submit">Log in</button>
-                </form>
+                    <Button type='button' id="submit" onClick={handleSubmit}>Submit</Button>
+                </FormGroup>
                 {error && <p id='error'>{ error }</p>}
             </div>
         </ModalContainer>
