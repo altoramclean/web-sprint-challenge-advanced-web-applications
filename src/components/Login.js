@@ -3,44 +3,42 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
+const initialState = {
+    username: '',
+    password: ''
+}
+
 const Login = () => {
-    const [value, setValues] = useState({
-        username: "",
-        password: "",
-        error: ""
-    });
+
+    const [ value, setValues ] = useState(initialState);
+    const [ error, setError ] = useState("");
 
     const { push } = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`http://localhost:5000/api/login`, { username: value.username, password: value.password })
+        axios.post(`http://localhost:5000/api/login`, value)
             .then(res => {
                 localStorage.setItem('token', res.data.token)
                 push("/view")
             })
-            .catch(err => {
-                setValues({
-                    ...value,
-                    username: "",
-                    password: "",
-                    error: "Login Has Failed"
-                })
-            })
-        
+            .catch(error => {
+            setError(error.res.data.error);
+        })
     }
-
+        
     const handleChange = (e) => {
         setValues({
             ...value,
             [e.target.name]: e.target.value
-        });
+        })
     }
 
 return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
+            <div> 
             <form onSubmit={handleSubmit}>
             <label>Username
                 <input 
@@ -60,10 +58,10 @@ return(<ComponentContainer>
                     onChange={handleChange} />
                     </label>
                 
-                <input id="submit" type="submit" value="Submit"/>
-            </form>
-            
-            <p id="error">{`${value.error}`}</p>
+                    <button id="submit">Log in</button>
+                </form>
+                {error && <p id='error'>{ error }</p>}
+            </div>
         </ModalContainer>
     </ComponentContainer>);
 }
