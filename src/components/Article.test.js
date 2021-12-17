@@ -10,7 +10,7 @@ import Article from './Article';
 const testOne = {
     id: 1,
     headline: "test article",
-    createdOn: Date.now(),
+    createdOn: "test createdOn",
     author:"test author",
     image: 134,
     summary: "test summary",
