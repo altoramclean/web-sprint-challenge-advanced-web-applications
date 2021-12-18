@@ -4,8 +4,6 @@ import axiosWithAuth from '../utils/axiosWithAuth';
 import Article from './Article';
 import EditForm from './EditForm';
 
-
-
 const View = (props) => {
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
@@ -25,18 +23,18 @@ const View = (props) => {
       .then((res) => {
         setArticles(res.data);
       })
-      .catch(error => {
-        console.log(error.res)
-      });
+      .catch(err => {
+        console.error(err)
+    })
     }
 
     const handleEdit = (article) => {
         axiosWithAuth()
         .put(`http://localhost:5000/api/articles/${editId}`, article)
-        .then((res) => {
-            setEditing(false)
-            setArticles(res.data);
-      })
+        .then(res => {
+            setEditId(res.data);
+            setEditing(false);
+        })
         .catch(error => {
             console.log(error.res)
       });
